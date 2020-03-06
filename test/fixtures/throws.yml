@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  throwId: 1
+  pins: 1
+  frameId: 1
+  frame_score: 1
+  special_calls: 1
+  bonus1: 1
+  bonus2: 1
+  game: one
+
+two:
+  throwId: 1
+  pins: 1
+  frameId: 1
+  frame_score: 1
+  special_calls: 1
+  bonus1: 1
+  bonus2: 1
+  game: two
