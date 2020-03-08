@@ -1,21 +1,20 @@
 class GamesController < ApplicationController
   def index
-    games = Game.order('created_at DESC')
-    render json: {status:'SUCCESS', message:'Loaded Games', data:games}, status: :ok
+    render json: games = Game.order('created_at DESC')
   end
   def show
     game = Game.find(params[:id])
-    render json: {status: 'SUCCESS', message: 'Loaded game', data: game},status: :ok
+    render json: game.scoreboard
   end
   def create
     game = Game.new(game_params)
     if game.save
-      render json: {status: 'SUCCESS', message:'game Saved', data:game}, status: :ok
+      render json: {status: 'SUCCESS', message:'Game started- Please use game id', data:game}, status: :ok
     else
       render json: {status: 'ERROR', message:'game NOT Saved', data:game.errors}, status: :unprocessable_entity
     end
   end
-
+=begin
   def destroy
     game = Game.find(params[:id])
     game.destroy
@@ -30,7 +29,7 @@ class GamesController < ApplicationController
       render json: {status: 'ERROR', message:'game NOT Updated', data:game.errors}, status: :unprocessable_entity
     end
   end
-
+=end
   private
   def game_params
   end
