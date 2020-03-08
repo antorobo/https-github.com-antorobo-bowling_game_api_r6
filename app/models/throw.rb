@@ -11,7 +11,8 @@ class Throw < ApplicationRecord
   def calculate_params
     #set initial throwId
     self.throwId = (Throw.all.where game_id:self.game_id).maximum(:throwId).to_i+1
-    #correct throwId if there was a strike called for the previous frame
+
+    #reassign throwId if there was a strike called for the previous frame
 
     if self.throwId > 1 && previous_throw.throwId % 2 != 0 && previous_throw.frame_complete == 1
       self.throwId +=1
@@ -33,7 +34,7 @@ class Throw < ApplicationRecord
 
     # bonus for spare
 
-    prev_throw
+
     if self.throwId > 2 && previous_throw&.special_calls == 1
       prev_throw.update(bonus1:self.pins)
     end
