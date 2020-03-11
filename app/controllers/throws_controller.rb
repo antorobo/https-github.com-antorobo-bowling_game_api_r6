@@ -1,12 +1,11 @@
-require 'pry'
+
 class ThrowsController < ApplicationController
   before_action :set_game, only: [:index, :show, :create]
   before_action :set_throw, only: [:show]
 
   # GET /throws
   def index
-    throws = @game.throws
-    render json: {status:'SUCCESS', message:'Loaded Throws', data:throws}, status: :ok
+    render json: @game.breakdown
   end
 
   # GET /throws/1
