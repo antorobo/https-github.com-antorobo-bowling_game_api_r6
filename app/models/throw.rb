@@ -13,7 +13,7 @@ class Throw < ApplicationRecord
 
     #reassign throwId if there was a strike called for the previous frame
     if self.throwId > 1 && previous_throw.throwId % 2 != 0 && previous_throw.frame_complete == 1
-      self.throwId +=1
+      self.throwId += 1
     end
 
     #set frameId
@@ -29,22 +29,14 @@ class Throw < ApplicationRecord
     #set frame complete if its the second throw
     !first_throw ? self.frame_complete = 1 : 0
 
-    # bonus for spare - if the previous throw had a special_calls == 1
-    if self.throwId > 2 && previous_throw&.special_calls == 1
-      prev_throw.update(bonus1:self.pins)
-    end
-    # bonus for strike   previous frames last throw(whether 1st or 2nd throw)
-    if self.throwId.between?(3,21) && prev_throw.special_calls == 2 && prev_throw.bonus1 == 0
-      prev_throw.update(bonus1:self.pins)
-    end
 
-#    #bonus for strike    if second throw of frame and last throw had special_calls == 2
-#    if self.throwId.between?(4,20) && !first_throw && prev_throw.special_calls == 2 && prev_throw.bonus2 == 0
-#      prev_throw.update(bonus2:self.pins)
-#    end
+    # bonus for strike/frame   previous frames last throw(whether 1st or 2nd throw)
+    if self.throwId.between?(3,21) && prev_throw&.special_calls > 0
+      prev_throw.update(bonus1:self.pins)
+    end
 
     #bonus for strike  if previous to previous frame had special_calls == 2, when consecutive throws are strikes
-    if self.throwId > 4 && first_throw && previous_2throw.special_calls == 2 && previous_2throw.bonus2 == 0
+    if self.throwId.between?(4,23) && first_throw && previous_2throw.special_calls == 2 && previous_2throw.bonus2 == 0
       previous_2throw.update(bonus2:self.pins)
     end
 
